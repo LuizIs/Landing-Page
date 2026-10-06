@@ -79,7 +79,6 @@ function renderSlider() {
     const isActive = index === currentSlide;
     slide.classList.toggle("active", isActive);
     slide.setAttribute("aria-hidden", String(!isActive));
-    slide.setAttribute("aria-current", isActive ? "true" : "false");
   });
 
   if (!dots) return;
@@ -92,7 +91,6 @@ function renderSlider() {
     button.className = `dot${isActive ? " active" : ""}`;
     button.setAttribute("aria-label", `Ir para corte ${index + 1}`);
     button.setAttribute("aria-pressed", String(isActive));
-    button.setAttribute("aria-current", isActive ? "true" : "false");
     button.addEventListener("click", () => {
       currentSlide = index;
       renderSlider();

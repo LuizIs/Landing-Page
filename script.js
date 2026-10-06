@@ -142,13 +142,15 @@ if (video) {
     heroVideo?.classList.remove("is-ready");
     video.style.display = "none";
   };
+  let videoLoadScheduled = false;
 
   video.addEventListener("loadeddata", showVideo, { once: true });
   video.addEventListener("error", hideVideo);
 
   const loadHeroVideo = () => {
-    if (reduceMotion.matches) return;
+    if (videoLoadScheduled || reduceMotion.matches || document.hidden) return;
 
+    videoLoadScheduled = true;
     video.autoplay = true;
     video.load();
 
@@ -156,13 +158,30 @@ if (video) {
     playPromise?.catch(() => {});
   };
 
-  if (document.readyState === "complete") {
+  const scheduleHeroVideoLoad = () => {
+    if (reduceMotion.matches || document.hidden) return;
+
     window.setTimeout(loadHeroVideo, 300);
+  };
+
+  const handleVisibilityChange = () => {
+    if (!document.hidden) {
+      scheduleHeroVideoLoad();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    }
+  };
+
+  if (document.readyState === "complete") {
+    scheduleHeroVideoLoad();
   } else {
-    window.addEventListener(
-      "load",
-      () => window.setTimeout(loadHeroVideo, 300),
-      { once: true },
-    );
+    window.addEventListener("load", scheduleHeroVideoLoad, { once: true });
   }
+
+  if (document.hidden) {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+  }
+
+  reduceMotion.addEventListener("change", () => {
+    if (!reduceMotion.matches) scheduleHeroVideoLoad();
+  });
 }

@@ -1,18 +1,27 @@
 const menu = document.querySelector(".menu-toggle");
 const mobile = document.querySelector("#mobileNav");
 
+const setMobileMenuState = (open) => {
+  mobile?.classList.toggle("open", open);
+  menu?.setAttribute("aria-expanded", String(open));
+  mobile?.setAttribute("aria-hidden", String(!open));
+};
+
 menu?.addEventListener("click", () => {
-  const open = mobile?.classList.toggle("open") ?? false;
-  menu.setAttribute("aria-expanded", String(open));
+  const open = !(mobile?.classList.contains("open") ?? false);
+  setMobileMenuState(open);
 });
 
 mobile?.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    mobile.classList.remove("open");
-    menu?.setAttribute("aria-expanded", "false");
-  });
+  link.addEventListener("click", () => setMobileMenuState(false));
 });
 
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && mobile?.classList.contains("open")) {
+    setMobileMenuState(false);
+    menu?.focus();
+  }
+});
 const header = document.querySelector(".site-header");
 const updateHeader = () => {
   header?.classList.toggle("is-scrolled", window.scrollY > 16);

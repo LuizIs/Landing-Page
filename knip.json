@@ -1,11 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": [
-    "script.js",
-    "index.html",
-    "tests/**/*.mjs",
-    "scripts/**/*.mjs"
-  ],
+  "entry": ["script.js", "index.html", "tests/**/*.mjs", "scripts/**/*.mjs"],
   "project": [
     "**/*.{js,mjs}",
     "!node_modules/**",

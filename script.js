@@ -142,8 +142,46 @@ if (video) {
     heroVideo?.classList.remove("is-ready");
     video.style.display = "none";
   };
+  let videoLoadScheduled = false;
 
   video.addEventListener("loadeddata", showVideo, { once: true });
   video.addEventListener("error", hideVideo);
-  if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) showVideo();
+
+  const loadHeroVideo = () => {
+    if (videoLoadScheduled || reduceMotion.matches || document.hidden) return;
+
+    videoLoadScheduled = true;
+    video.autoplay = true;
+    video.load();
+
+    const playPromise = video.play();
+    playPromise?.catch(() => {});
+  };
+
+  const scheduleHeroVideoLoad = () => {
+    if (reduceMotion.matches || document.hidden) return;
+
+    window.setTimeout(loadHeroVideo, 300);
+  };
+
+  const handleVisibilityChange = () => {
+    if (!document.hidden) {
+      scheduleHeroVideoLoad();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    }
+  };
+
+  if (document.readyState === "complete") {
+    scheduleHeroVideoLoad();
+  } else {
+    window.addEventListener("load", scheduleHeroVideoLoad, { once: true });
+  }
+
+  if (document.hidden) {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+  }
+
+  reduceMotion.addEventListener("change", () => {
+    if (!reduceMotion.matches) scheduleHeroVideoLoad();
+  });
 }

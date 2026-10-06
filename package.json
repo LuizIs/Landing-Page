@@ -1,0 +1,31 @@
+{
+  "name": "barbearia-levittado",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/unit/**/*.test.mjs tests/integration/**/*.test.mjs",
+    "test:unit": "node --test tests/unit/**/*.test.mjs",
+    "test:integration": "node --test tests/integration/**/*.test.mjs",
+    "test:e2e": "playwright test",
+    "test:coverage": "c8 --reporter=text --reporter=lcov npm test",
+    "lint": "biome check --write=false index.html script.js styles.css tests scripts",
+    "format:check": "biome format index.html script.js styles.css tests scripts",
+    "knip": "knip",
+    "arch": "arch-contract check",
+    "mutation": "stryker run",
+    "commitlint": "commitlint --from=HEAD~1 --to=HEAD",
+    "check": "npm run lint && npm test && npm run test:e2e",
+    "check:ci": "npm run lint && npm run format:check && npm test && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@commitlint/cli": "21.2.3",
+    "@commitlint/config-conventional": "21.2.3",
+    "@playwright/test": "1.63.0",
+    "@stryker-mutator/core": "10.0.0",
+    "arch-contract": "latest",
+    "c8": "12.0.0",
+    "knip": "6.39.0"
+  }
+}

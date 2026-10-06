@@ -1,10 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {
-  clampProgress,
-  countOccurrences,
-  hasAttribute,
-} from "../../scripts/site-contracts.mjs";
+import { clampProgress, countOccurrences, hasAttribute } from "../../scripts/site-contracts.mjs";
 
 test("clampProgress normalizes scroll progress", () => {
   assert.equal(clampProgress(0, 100), 0);

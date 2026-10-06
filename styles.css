@@ -96,6 +96,20 @@ body {
 .footer a:hover {
   color: #fff;
 }
+.desktop-nav a:focus-visible,
+.footer a:focus-visible,
+.menu-toggle:focus-visible,
+.mobile-nav a:focus-visible,
+.btn:focus-visible,
+.text-link:focus-visible,
+.service:focus-visible,
+.slider-prev:focus-visible,
+.slider-next:focus-visible,
+.dot:focus-visible,
+.floating-wa:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 4px;
+}
 .nav-cta {
   padding: 13px 18px;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1106,6 +1120,19 @@ body {
     bottom: 16px;
   }
 }
+@media (forced-colors: active) {
+  .menu-toggle,
+  .slider-prev,
+  .slider-next,
+  .dot {
+    border: 1px solid ButtonText;
+  }
+
+  .dot.active {
+    background: ButtonText;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

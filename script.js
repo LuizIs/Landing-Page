@@ -145,5 +145,24 @@ if (video) {
 
   video.addEventListener("loadeddata", showVideo, { once: true });
   video.addEventListener("error", hideVideo);
-  if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) showVideo();
+
+  const loadHeroVideo = () => {
+    if (reduceMotion.matches) return;
+
+    video.autoplay = true;
+    video.load();
+
+    const playPromise = video.play();
+    playPromise?.catch(() => {});
+  };
+
+  if (document.readyState === "complete") {
+    window.setTimeout(loadHeroVideo, 300);
+  } else {
+    window.addEventListener(
+      "load",
+      () => window.setTimeout(loadHeroVideo, 300),
+      { once: true },
+    );
+  }
 }

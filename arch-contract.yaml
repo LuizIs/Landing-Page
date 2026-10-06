@@ -1,0 +1,26 @@
+version: 1
+project:
+  name: barbearia-levittado
+
+# The current product is a static landing page. These contracts intentionally
+# stay minimal until a component/module architecture is introduced.
+layers:
+  - name: site
+    match:
+      - index.html
+      - script.js
+      - styles.css
+  - name: tests
+    match:
+      - tests/**/*
+  - name: tooling
+    match:
+      - scripts/**/*
+
+ruleset:
+  site:
+    mayDependOn: []
+  tests:
+    mayDependOn: [site]
+  tooling:
+    mayDependOn: []

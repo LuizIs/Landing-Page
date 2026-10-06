@@ -1,5 +1,5 @@
-import http from "node:http";
 import fs from "node:fs/promises";
+import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -21,7 +21,10 @@ const mime = {
 const server = http.createServer(async (request, response) => {
   try {
     const requestPath = decodeURIComponent(new URL(request.url, "http://127.0.0.1").pathname);
-    const safePath = path.normalize(path.join(root, requestPath === "/" ? "index.html" : requestPath));
+    const safePath = path.normalize(
+      path.join(root, requestPath === "/" ? "index.html" : requestPath),
+    );
+
     if (!safePath.startsWith(root)) {
       response.writeHead(403);
       response.end("Forbidden");

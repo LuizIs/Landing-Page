@@ -1,7 +1,7 @@
-import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
+import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { countOccurrences, hasAttribute } from "../../scripts/site-contracts.mjs";
 
@@ -11,7 +11,7 @@ const script = await fs.readFile(path.join(root, "script.js"), "utf8");
 const styles = await fs.readFile(path.join(root, "styles.css"), "utf8");
 
 test("critical page contracts are present", () => {
-  assert.match(html, /<h1[\\s\\S]*?Barbearia Levittado/);
+  assert.match(html, /<h1[\s\S]*?Barbearia Levittado/);
   assert.match(html, /rel="canonical"/);
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /class="page-progress"/);

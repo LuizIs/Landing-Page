@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://luizis.github.io/Landing_Page/sitemap.xml

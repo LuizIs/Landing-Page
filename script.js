@@ -42,6 +42,10 @@ const revealTargets = document.querySelectorAll(
     "main section:not(.hero) .person",
     "main section:not(.hero) .place-grid > *",
     "main section:not(.hero) .location-grid > *",
+    "main section:not(.hero) .place-gallery img",
+    "main section:not(.hero) .experience-photo",
+    "main section:not(.hero) .review-card",
+    "main section:not(.hero) .map-card",
     "main section:not(.hero) .final-cta > *",
   ].join(", "),
 );
@@ -206,7 +210,7 @@ const updatePageProgress = () => {
 
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
-  pageProgressBar.style.width = `${progress * 100}%`;
+  pageProgressBar.style.transform = `scaleX(${progress})`;
   pageProgress?.classList.toggle("is-active", scrollable > 0 && progress > 0);
 };
 

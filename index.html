@@ -50,6 +50,7 @@
     </script>
   </head>
   <body>
+    <div class="page-progress" aria-hidden="true"><span></span></div>
     <div class="grain" aria-hidden="true"></div>
     <header class="site-header">
       <a class="brand" href="#inicio"
@@ -480,7 +481,7 @@
               >Pesquisar a Levittado no Google Maps ↗</a
             >
           </div>
-          <div class="map-card">
+          <div class="map-card is-loading" aria-busy="true">
             <iframe
               title="Pesquisar Barbearia Levittado no Google Maps"
               src="https://www.google.com/maps?q=Barbearia+Levittado&output=embed"
@@ -513,7 +514,7 @@
     <footer class="footer">
       <div class="footer-main">
         <a class="brand" href="#inicio"
-          ><img src="assets/logo-levittado.jpg" alt="" /><span
+          ><img src="assets/logo-levittado.jpg" alt="" loading="lazy" decoding="async" /><span
             >LEVITTADO</span
           ></a
         >

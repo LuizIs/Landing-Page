@@ -42,6 +42,10 @@ const revealTargets = document.querySelectorAll(
     "main section:not(.hero) .person",
     "main section:not(.hero) .place-grid > *",
     "main section:not(.hero) .location-grid > *",
+    "main section:not(.hero) .place-gallery img",
+    "main section:not(.hero) .experience-photo",
+    "main section:not(.hero) .review-card",
+    "main section:not(.hero) .map-card",
     "main section:not(.hero) .final-cta > *",
   ].join(", "),
 );
@@ -193,4 +197,65 @@ if (video) {
   reduceMotion.addEventListener("change", () => {
     if (!reduceMotion.matches) scheduleHeroVideoLoad();
   });
+}
+
+
+/* Motion + loading states */
+const pageProgress = document.querySelector(".page-progress");
+const pageProgressBar = pageProgress?.querySelector("span");
+let progressFrame;
+
+const updatePageProgress = () => {
+  if (!pageProgressBar) return;
+
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+  pageProgressBar.style.transform = `scaleX(${progress})`;
+  pageProgress?.classList.toggle("is-active", scrollable > 0 && progress > 0);
+};
+
+const schedulePageProgress = () => {
+  if (progressFrame) return;
+  progressFrame = window.requestAnimationFrame(() => {
+    progressFrame = undefined;
+    updatePageProgress();
+  });
+};
+
+window.addEventListener("scroll", schedulePageProgress, { passive: true });
+window.addEventListener("resize", schedulePageProgress, { passive: true });
+updatePageProgress();
+
+const motionMedia = document.querySelectorAll("img");
+motionMedia.forEach((image) => {
+  image.setAttribute("data-motion-media", "");
+
+  const markLoaded = () => {
+    image.classList.remove("is-error");
+    image.classList.add("is-loaded");
+  };
+
+  const markError = () => {
+    image.classList.remove("is-loaded");
+    image.classList.add("is-error");
+  };
+
+  image.addEventListener("load", markLoaded, { once: true });
+  image.addEventListener("error", markError, { once: true });
+
+  if (image.complete) {
+    if (image.naturalWidth > 0) markLoaded();
+    else markError();
+  }
+});
+
+const mapCard = document.querySelector(".map-card");
+const mapFrame = mapCard?.querySelector("iframe");
+mapFrame?.addEventListener("load", () => {
+  mapCard?.classList.remove("is-loading");
+  mapCard?.setAttribute("aria-busy", "false");
+}, { once: true });
+
+if (mapFrame && !mapCard?.classList.contains("is-loading")) {
+  mapCard?.setAttribute("aria-busy", "false");
 }

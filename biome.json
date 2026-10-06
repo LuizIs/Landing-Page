@@ -1,17 +1,5 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
-  "files": {
-    "includes": [
-      "index.html",
-      "script.js",
-      "styles.css",
-      "tests/**/*.mjs",
-      "scripts/**/*.mjs",
-      "!coverage/**",
-      "!playwright-report/**",
-      "!test-results/**"
-    ]
-  },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",

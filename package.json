@@ -9,7 +9,7 @@
     "test:integration": "node --test tests/integration/**/*.test.mjs",
     "test:e2e": "playwright test",
     "test:coverage": "c8 --reporter=text --reporter=lcov npm test",
-    "lint": "biome check --write=false index.html script.js styles.css tests scripts",
+    "lint": "biome check index.html script.js styles.css tests scripts",
     "format:check": "biome format index.html script.js styles.css tests scripts",
     "knip": "knip",
     "arch": "arch-contract check",
